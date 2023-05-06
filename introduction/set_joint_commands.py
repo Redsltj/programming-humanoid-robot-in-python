@@ -29,3 +29,6 @@ class MyAgent(SparkAgent):
 if '__main__' == __name__:
     agent = MyAgent()
     agent.run()
+
+    
+    #I haven't been able to run the simulation yet, so this code has not been tested
