@@ -20,6 +20,8 @@ from spark_agent import SparkAgent
 class MyAgent(SparkAgent):
     def think(self, perception):
         action = super(MyAgent, self).think(perception)
+        stiffness (LShoulderPitch) = 0
+        speed (HeadYaw) = 0.1
         # YOUR CODE HERE
 
         return action
