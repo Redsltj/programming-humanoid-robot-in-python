@@ -12,6 +12,9 @@
 
 from angle_interpolation import AngleInterpolationAgent
 from keyframes import hello
+import os
+import numpy as np
+import pickle
 
 
 class PostureRecognitionAgent(AngleInterpolationAgent):
@@ -22,7 +25,7 @@ class PostureRecognitionAgent(AngleInterpolationAgent):
                  sync_mode=True):
         super(PostureRecognitionAgent, self).__init__(simspark_ip, simspark_port, teamname, player_id, sync_mode)
         self.posture = 'unknown'
-        self.posture_classifier = None  # LOAD YOUR CLASSIFIER
+        self.posture_classifier = pickle(load(open('posture','rb')))  # LOAD YOUR CLASSIFIER
 
     def think(self, perception):
         self.posture = self.recognize_posture(perception)
@@ -31,7 +34,17 @@ class PostureRecognitionAgent(AngleInterpolationAgent):
     def recognize_posture(self, perception):
         posture = 'unknown'
         # YOUR CODE HERE
+        pts = []
+        joints = ['LHipYawPitch', 'LHipRoll', 'LHipPitch', 'LKneePitch', 'RHipYawPitch', 'RHipRoll', 'RHipPitch', 'RKneePitch', 'AngleX', 'AngleY']
+        for i in joints :
+            pts.append(perception.joints[i])
+            pts.append(perception.imu[0])
+            pts.append(perception.imu[1])
 
+        what_posture = self.posture_classifier.predict([pts])
+        robot_pose_data_path = os.path.join(self.dir, 'robot_pose_data')
+        posture = os.listdir(robot_pose_data_path)[what_posture[0]]
+        
         return posture
 
 if __name__ == '__main__':
