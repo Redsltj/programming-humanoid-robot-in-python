@@ -53,7 +53,18 @@ class PIDController(object):
         @return control signal
         '''
         # YOUR CODE HERE
+        times = keyframes[1]
+        keys = keyframes[2]
+        angle = keys[0]
+    
 
+        PI = self.Kp + self.Ki * self.dt + self.Kd / self.dt
+        PD = self.Kp + self.Kd * 2 / self.dt
+        D = self.Kd / self.dt
+
+        for t in range(1,len(times)) :
+            error = target - (sensor + self.y)
+            self.u = PI * PD * D * (angle[t] + error)
         return self.u
 
 
