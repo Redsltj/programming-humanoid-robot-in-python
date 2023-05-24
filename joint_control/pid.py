@@ -15,6 +15,7 @@ import sys
 sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', 'software_installation'))
 
 import numpy as np
+import keyframes as keyframes
 from collections import deque
 from spark_agent import SparkAgent, JOINT_CMD_NAMES
 
@@ -35,9 +36,9 @@ class PIDController(object):
         self.e2 = np.zeros(size)
         # ADJUST PARAMETERS BELOW
         delay = 0
-        self.Kp = 0
-        self.Ki = 0
-        self.Kd = 0
+        self.Kp = 20
+        self.Ki = 0.4
+        self.Kd = 0.1
         self.y = deque(np.zeros(size), maxlen=delay + 1)
 
     def set_delay(self, delay):
