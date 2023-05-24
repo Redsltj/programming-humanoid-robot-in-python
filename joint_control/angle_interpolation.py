@@ -21,6 +21,7 @@
 
 
 from pid import PIDAgent
+import keyframes as keyframes
 from keyframes import hello
 
 
@@ -48,12 +49,12 @@ class AngleInterpolationAgent(PIDAgent):
         for i, joint in enumerate(name):
             for j in range(len(time[i])-1):
                 if (time[i][j] < currenttime < time[i][len(time[i])-1]):
-                    p0 = keys[i][j][0]
-                    p1 = p0 + keys[i][j][1][2]
-                    p3 = keys[i][j + 1][0]
-                    p2 = p3 + keys[i][j][1][2]
+                    P_0 = keys[i][j][0]
+                    P_0 = P_0 + keys[i][j][1][2]
+                    P_3 = keys[i][j + 1][0]
+                    P_2 = P_3 + keys[i][j][1][2]
                     t = (currenttime - time[i][j]) / (time[i][j + 1] - time[i][j])
-                    target_joints[joint] = (1-t)**3 * p0 + 3*(1-t)**2 * t*p1 + 3*(1-t) * t**2 * p2 + t**3 * p3
+                    target_joints[joint] = (1-t)**3 * P_0 + 3*(1-t)**2 * t*P_1 + 3*(1-t) * t**2 * P_2 + t**3 * P_3
         return target_joints
 
 if __name__ == '__main__':
