@@ -18,8 +18,8 @@ class StandingUpAgent(PostureRecognitionAgent):
         posture = self.posture
         # YOUR CODE HERE
         if not self.keyframes[0]:
-            if posture in ['HeadBack', 'Left'] :
-                self.keyframes = keyframes.leftBackToStand()
+            if posture in ['HeadBack', 'Left'] :                        #recognizing joint postures and associating them with movements
+                self.keyframes = keyframes.leftBackToStand()            
             elif posture in ['Back', 'Right']:
                 self.keyframes = keyframes.rightBackToStand()
             elif posture in ['Belly', 'knee']:
