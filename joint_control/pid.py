@@ -54,18 +54,16 @@ class PIDController(object):
         @return control signal
         '''
         # YOUR CODE HERE
-        times = keyframes[1]
+        times = keyframes[1]        #separation of the different elements of keyframes
         keys = keyframes[2]
         angle = keys[0]
     
 
-        PI = self.Kp + self.Ki * self.dt + self.Kd / self.dt
-        PD = self.Kp + self.Kd * 2 / self.dt
-        D = self.Kd / self.dt
-
+        PID = self.Kp + self.Ki * self.dt + self.Kd / self.dt        #equation of the controller
+        
         for t in range(1,len(times)) :
-            error = target - (sensor + self.y)
-            self.u = PI * PD * D * (angle[t] + error)
+            error = target - (sensor + self.y)              #self.y is a buffer to avoid oscillations
+            self.u = PID * (angle[t] + error)       #application of the PID controllers to the joint's angle
         return self.u
 
 
