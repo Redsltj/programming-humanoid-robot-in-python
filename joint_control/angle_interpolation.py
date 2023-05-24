@@ -44,7 +44,7 @@ class AngleInterpolationAgent(PIDAgent):
     def angle_interpolation(self, keyframes, perception):
         target_joints = {}
         # YOUR CODE HERE
-        keys = keyframes[2]
+        keys = keyframes[2]             #separating the elements of keyframes
         time = keyframes[1]
         name = keyframes[0]
         
@@ -52,15 +52,15 @@ class AngleInterpolationAgent(PIDAgent):
         for i, joint in enumerate(name):
             for j in range(len(time[i])-1):
                 self.start_time = time[j]
-                currenttime = perception.time - self.start_time
+                currenttime = perception.time - self.start_time         
                 
-                if (time[i][j] < currenttime < time[i][len(time[i])-1]):
-                    P_0 = keys[i][j][0]
+                if (time[i][j] < currenttime < time[i][len(time[i])-1]):    # duration of the movement
+                    P_0 = keys[i][j][0]                                     #control points for the curve
                     P_0 = P_0 + keys[i][j][1][2]
                     P_3 = keys[i][j + 1][0]
                     P_2 = P_3 + keys[i][j][1][2]
-                    t = (currenttime - time[i][j]) / (time[i][j + 1] - time[i][j])
-                    target_joints[joint] = (1-t)**3 * P_0 + 3*(1-t)**2 * t*P_1 + 3*(1-t) * t**2 * P_2 + t**3 * P_3
+                    t = (currenttime - time[i][j]) / (time[i][j + 1] - time[i][j])              #time of the movement
+                    target_joints[joint] = (1-t)**3 * P_0 + 3*(1-t)**2 * t*P_1 + 3*(1-t) * t**2 * P_2 + t**3 * P_3      #bézier interpolation curve
         return target_joints
 
 if __name__ == '__main__':
