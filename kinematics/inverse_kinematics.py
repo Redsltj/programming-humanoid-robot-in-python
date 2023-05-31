@@ -30,7 +30,7 @@ class InverseKinematicsAgent(ForwardKinematicsAgent):
         Ts = [identity(4)]
         
         for i in range(1000):
-            for k, name in enumerate(self.chains[effector_name]):
+            for name in enumerate(self.chains[effector_name]):
                 Ts.append(self.transforms[name])
         #unfinished
         return joint_angles
