@@ -23,6 +23,7 @@ class InverseKinematicsAgent(ForwardKinematicsAgent):
         :return: list of joint angles
         '''
         joint_angles = []
+        
         # YOUR CODE HERE
         return joint_angles
 
