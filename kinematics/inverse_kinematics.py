@@ -25,13 +25,34 @@ class InverseKinematicsAgent(ForwardKinematicsAgent):
         joint_angles = []
         
         # YOUR CODE HERE
+        max_step = 0.1
+        lambda_ = 1
+        Ts = [identity(4)]
+        
+        for i in range(1000):
+            for k, name in enumerate(self.chains[effector_name]):
+                Ts.append(self.transforms[name])
+        #unfinished
         return joint_angles
 
     def set_transforms(self, effector_name, transform):
         '''solve the inverse kinematics and control joints use the results
         '''
         # YOUR CODE HERE
-        self.keyframes = ([], [], [])  # the result joint angles have to fill in
+        
+        transform += self.transforms[self.chains[effector_name][-1]]            # transformation matrix 
+        
+        joint_angles = self.inverse_kinematics(effector_name, transform)        # return of the new angles after application of inverse kinematics to the chosen 
+                                                                                # joint for the chosen transformation
+        
+        names = [effector_name]
+        times = [[1.0]]*len(self.chains[effector_name])
+        keys = []
+        
+        for i in range(len(joint_angles)):
+            keys.append([joint_angles[i], [0, 0.0, 0.0]])                       # adding new angles to the keys matrix
+            
+        self.keyframes = (names, times, [keys])  # the result joint angles have to fill in
 
 if __name__ == '__main__':
     agent = InverseKinematicsAgent()
