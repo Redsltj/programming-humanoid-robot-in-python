@@ -19,7 +19,6 @@ sys.path.append(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', '
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 import threading
 
-#import pack and unpack from client
 from agent_client import PackUnpack
 
 from inverse_kinematics import InverseKinematicsAgent
